@@ -1,0 +1,77 @@
+Two ways to print a simple phrase "coucou belle journee"
+
+----------------
+From the stack :
+----------------
+
+xor    eax,eax
+mov    al,0x4
+xor    ebx,ebx
+mov    bl,0x1
+xor    edx,edx
+push   edx
+push   0x65656e72
+push   0x756f6a20
+push   0x656c6c65
+push   0x6220756f
+push   0x63756f63
+mov    ecx,esp
+mov    dl,0x14
+int    0x80
+xor    eax,eax
+mov    al,0x1
+xor    ebx,ebx
+int    0x80
+
+Length : 50
+
+"\x31\xc0\xb0\x04\x31\xdb\xb3\x01\x31\xd2\x52\x68\x72\x6e\x65\x65\x68\x20\x6a\x6f\x75\x68\x65\x6c\x6c\x65"
+"\x68\x6f\x75\x20\x62\x68\x63\x6f\x75\x63\x89\xe1\xb2\x14\xcd\x80\x31\xc0\xb0\x01\x31\xdb\xcd\x80"
+
+to put your own text use python :
+
+code = "mytexte"
+code[::-1].encode('hex')
+
+
+
+---------------------
+From the Jmp/call/pop
+---------------------
+  _start:
+  eb 17                	jmp    8048079 <shelldata>
+
+  shellcode:
+	31 c0                	xor    eax,eax
+	b0 04                	mov    al,0x4
+	31 db                	xor    ebx,ebx
+	b3 01                	mov    bl,0x1
+	59                   	pop    ecx
+	31 d2                	xor    edx,edx
+	b2 14                	mov    dl,0x14
+	cd 80                	int    0x80
+	31 c0                	xor    eax,eax
+	b0 01                	mov    al,0x1
+	31 db                	xor    ebx,ebx
+	cd 80                	int    0x80
+
+  shelldata:
+	e8 e4 ff ff ff       	call   8048062 <shellcode>
+
+  texte:
+	63 6f 75             	arpl   WORD PTR [edi+0x75],bp
+	63 6f 75             	arpl   WORD PTR [edi+0x75],bp
+	20 62 65             	and    BYTE PTR [edx+0x65],ah
+	6c                   	ins    BYTE PTR es:[edi],dx
+	6c                   	ins    BYTE PTR es:[edi],dx
+	65 20 6a 6f          	and    BYTE PTR gs:[edx+0x6f],ch
+	75 72                	jne    8048101 <texte+0x83>
+	6e                   	outs   dx,BYTE PTR ds:[esi]
+	65                   	gs
+	65                   	gs
+	0a                   	.byte 0xa
+
+Length: 51
+
+"\xeb\x17\x31\xc0\xb0\x04\x31\xdb\xb3\x01\x59\x31\xd2\xb2\x14\xcd\x80\x31\xc0\xb0\x01\x31"
+\xdb\xcd\x80\xe8\xe4\xff\xff\xff\x63\x6f\x75\x63\x6f\x75\x20\x62\x65\x6c\x6c\x65\x20\x6a\x6f\x75\x72\x6e\x65\x65\x0a"
