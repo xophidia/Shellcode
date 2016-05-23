@@ -2,6 +2,11 @@
 Open /etc/passwd with /bin/cat
 -------------------------------
 
+By Xophidia - 2016
+Platform: Linux / x86
+
+
+
 xor    eax,eax
 push   eax
 push   0x7461632f

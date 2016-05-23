@@ -1,5 +1,9 @@
+----------------------------------------
 Open an shell /bin/sh with jump/call/pop
 ----------------------------------------
+
+By Xophidia - 2016
+Platform: Linux / x86
 
 jmp    0x804807c
 pop    esi
