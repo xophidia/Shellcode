@@ -1,3 +1,10 @@
+-----------------------------------------------
+Open a listener on 12345 with nc - Polymorphic
+-----------------------------------------------
+
+By Xophidia - 2016
+Platform: Linux / x86
+
 One way to avoid AV and IDS is to use polymorphic shellcode
 
 
