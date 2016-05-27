@@ -7,3 +7,5 @@ Some shellcode x86/x64
 - Open a shell /bin/sh
 - Open /etc/passwd
 - Open a backdoor on port 12345
+- Open a backdoor on port 12345 - polymorphic
+- XOR decode
