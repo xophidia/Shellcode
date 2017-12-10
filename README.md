@@ -6,7 +6,7 @@ Le script compile.sh prend en argument le nom du fichier assembleur et fournit l
 
 ```bash
 ./compile.sh shellcode
-[+] compilation nasm
+[+] Compilation nasm
 [+] Edition de liens
 [+] Shellcode ...
 "\x31\xc0\xb0\x01\x31\xdb\xb3\x01\xcd\x80"
