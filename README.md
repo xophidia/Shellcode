@@ -4,7 +4,7 @@
 
 Le script compile.sh prend en argument le nom du fichier assembleur et fournit le shellcode.
 
-```
+```bash
 ./compile.sh shellcode
 [+] compilation nasm
 [+] Edition de liens
@@ -16,7 +16,7 @@ Le script compile.sh prend en argument le nom du fichier assembleur et fournit l
 
 Pour le tester utilisez le fichier testShellcode.c
 
-```
+```c
 #include <stdio.h>
 #include <string.h>
 
