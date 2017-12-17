@@ -53,3 +53,9 @@ Some shellcode x86/x64
 - Open a backdoor on port 12345
 - Open a backdoor on port 12345 - polymorphic
 - XOR decode
+- Change the content of /var/www/html/index.html with your own text (stack version)
+
+## x64 ##
+
+- Print a text
+- Flush iptable
